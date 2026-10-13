@@ -16,35 +16,25 @@
     <?php
     require 'auxiliar.php';
 
-    $pdo = new PDO('pgsql:host=localhost;dbname=empleados', 'empleados', 'empleados');
-
+    $pdo = conectar();
     $codigo = obtener_get('codigo');
 
     if ($codigo === null || $codigo === '') {
-        $sent = $pdo->query('SELECT COUNT(*) FROM departamentos');
-        $count = $sent->fetchColumn();
+        $filas = todos_departamentos($pdo);
+        $count = count($filas);
         if ($count == 0) {
             ?>
             <h3>La tabla está vacía</h3>
             <?php
-        } else {
-            $sent = $pdo->query('SELECT * FROM departamentos');
         }
-    } else {                       // No es la primera vez que se entra
-        $sent = $pdo->prepare("SELECT COUNT(*)
-                                 FROM departamentos
-                                WHERE codigo::text = :codigo");
-        $sent->execute([':codigo' => $codigo]);
-        $count = $sent->fetchColumn();
+    } else {
+        $fila = buscar_departamento_por_codigo($pdo, $codigo);
+        $count = empty($fila) ? 0 : 1;
+        $filas = [$fila];
         if ($count == 0) {
             ?>
             <h3>No hay ningún departamento con ese código.</h3>
             <?php
-        } else {
-            $sent = $pdo->prepare("SELECT *
-                                     FROM departamentos
-                                    WHERE codigo::text = :codigo");
-            $sent->execute([':codigo' => $codigo]);
         }
     }
     ?>
@@ -55,7 +45,7 @@
                 <th>Denominación</th>
             </thead>
             <tbody>
-                <?php foreach ($sent as $fila): ?>
+                <?php foreach ($filas as $fila): ?>
                     <tr>
                         <td><?= $fila['codigo'] ?></td>
                         <td><?= $fila['denominacion'] ?></td>
@@ -65,6 +55,5 @@
         </table>
         <p>Número de registros: <?= $count ?></p>
     <?php endif ?>
-    <a href="buscar.php">Buscar de nuevo</a>
 </body>
 </html>
