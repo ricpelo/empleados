@@ -63,7 +63,12 @@
                     <tr>
                         <td><?= $fila['codigo'] ?></td>
                         <td><?= $fila['denominacion'] ?></td>
-                        <td><a href="borrar.php?id=<?= $fila['id'] ?>">Borrar</a></td>
+                        <td>
+                            <form action="hacer_borrado.php" method="post">
+                                <input type="hidden" name="id" value="<?= $fila['id'] ?>">
+                                <button type="submit">Borrar</button>
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach ?>
             </tbody>
