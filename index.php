@@ -6,20 +6,34 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="" method="get">
-        <label>
-            Buscar por código:
-            <input type="text" name="codigo" />
-        </label>
-        <button type="submit">Buscar</button>
-    </form>
     <?php
     require 'auxiliar.php';
 
+    $denominacion = obtener_get('denominacion');
+    ?>
+    <fieldset>
+        <legend>Buscar</legend>
+        <form action="" method="get">
+            <div>
+                <label>
+                    Denominación:
+                    <input type="text" name="denominacion"
+                        value="<?= $denominacion ?>" />
+                </label>
+            </div>
+            <button type="submit">Buscar</button>
+        </form>
+    </fieldset>
+    <?php
     $pdo = conectar();
-    $codigo = obtener_get('codigo');
 
-    if ($codigo === null || $codigo === '') {
+    $denominacion = str_replace(
+        ["á", "é", "í", "ó", "ú"],
+        ["a", "e", "i", "o", "u"],
+        strtolower($denominacion)
+    );
+
+    if ($denominacion === '') {
         $filas = todos_departamentos($pdo);
         $count = count($filas);
         if ($count == 0) {
@@ -28,12 +42,11 @@
             <?php
         }
     } else {
-        $fila = buscar_departamento_por_codigo($pdo, $codigo);
-        $count = empty($fila) ? 0 : 1;
-        $filas = [$fila];
+        $filas = buscar_departamento_por_denominacion($pdo, $denominacion);
+        $count = count($filas);
         if ($count == 0) {
             ?>
-            <h3>No hay ningún departamento con ese código.</h3>
+            <h3>No hay ningún departamento con esa denominación.</h3>
             <?php
         }
     }
@@ -43,12 +56,14 @@
             <thead>
                 <th>Código</th>
                 <th>Denominación</th>
+                <th>Acciones</th>
             </thead>
             <tbody>
                 <?php foreach ($filas as $fila): ?>
                     <tr>
                         <td><?= $fila['codigo'] ?></td>
                         <td><?= $fila['denominacion'] ?></td>
+                        <td><a href="borrar.php?id=<?= $fila['id'] ?>">Borrar</a></td>
                     </tr>
                 <?php endforeach ?>
             </tbody>
