@@ -75,5 +75,6 @@
         </table>
         <p>Número de registros: <?= $count ?></p>
     <?php endif ?>
+    <a href="insertar.php">Insertar un nuevo departamento</a>
 </body>
 </html>
