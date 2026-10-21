@@ -60,6 +60,7 @@
             <?php mostrar_errores('denominacion', $errores) ?>
         </div>
         <button type="submit">Insertar</button>
+        <a href="index.php">Volver</a>
     </form>
 </body>
 </html>
