@@ -7,7 +7,7 @@
 </head>
 <body>
     <?php
-    require 'auxiliar.php';
+    require '../comunes/auxiliar.php';
 
     $denominacion = obtener_get('denominacion');
     ?>
@@ -64,7 +64,7 @@
                         <td><?= $fila['codigo'] ?></td>
                         <td><?= $fila['denominacion'] ?></td>
                         <td>
-                            <form action="hacer_borrado.php" method="post">
+                            <form action="borrar.php" method="post">
                                 <input type="hidden" name="id" value="<?= $fila['id'] ?>">
                                 <button type="submit">Borrar</button>
                             </form>

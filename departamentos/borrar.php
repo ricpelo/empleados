@@ -1,5 +1,5 @@
 <?php
-require 'auxiliar.php';
+require '../comunes/auxiliar.php';
 
 $id = obtener_post('id');
 

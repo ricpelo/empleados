@@ -18,30 +18,20 @@
 </head>
 <body>
     <?php
-    require 'auxiliar.php';
+    require '../comunes/auxiliar.php';
 
-    $id = obtener_get('id');
+    $codigo = obtener_post('codigo');
+    $denominacion = obtener_post('denominacion');
     $pdo = conectar();
     $errores = [];
 
-    if (empty($id) ||
-        !ctype_digit($id) ||
-        empty($fila = buscar_departamento_por_id($pdo, $id))) {
-        return volver();
-    }
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $codigo = obtener_post('codigo');
-        $denominacion = obtener_post('denominacion');
-        validar_codigo($codigo, $pdo, $errores, $id);
+        validar_codigo($codigo, $pdo, $errores);
         validar_denominacion($denominacion, $errores);
         if (empty($errores)) {
-            modificar_departamento($pdo, $id, $codigo, $denominacion);
+            insertar_departamento($pdo, $codigo, $denominacion);
             return volver();
         }
-    } else {
-        $codigo = $fila['codigo'];
-        $denominacion = $fila['denominacion'];
     }
     ?>
     <form action="" method="post">
@@ -69,7 +59,7 @@
             </label>
             <?php mostrar_errores('denominacion', $errores) ?>
         </div>
-        <button type="submit">Modificar</button>
+        <button type="submit">Insertar</button>
         <a href="index.php">Volver</a>
     </form>
 </body>
