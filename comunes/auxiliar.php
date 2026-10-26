@@ -21,6 +21,14 @@ function todos_departamentos(PDO $pdo): array
     return $sent->fetchAll();
 }
 
+function todos_empleados(PDO $pdo): array
+{
+    $sent = $pdo->query('SELECT e.*, codigo, denominacion
+                           FROM empleados e JOIN departamentos d
+                             ON departamento_id = d.id');
+    return $sent->fetchAll();
+}
+
 function buscar_departamento_por_codigo(PDO $pdo, string $codigo): array
 {
     $sent = $pdo->prepare("SELECT *
@@ -126,4 +134,125 @@ function modificar_departamento(PDO $pdo, string $id, string $codigo, string $de
 function css_campo_error(string $campo, array $errores): string
 {
     return (isset($errores[$campo])) ? 'class="campo-error"' : '';
+}
+
+function lista_departamentos(PDO $pdo): array
+{
+    $filas = todos_departamentos($pdo);
+    $res = [];
+
+    foreach ($filas as $fila) {
+        $res[$fila['id']] = "(" . $fila['codigo'] . ") " . $fila['denominacion'];
+    }
+
+    return $res;
+}
+
+function validar_numero(string $numero, PDO $pdo, array $errores, ?string $id = null)
+{
+if ($numero === '') {
+        $errores['numero'][] = 'El número no puede ser vacío.';
+    } elseif (!ctype_digit($numero)) {
+        $errores['numero'][] = 'El número debe ser un número entero positivo.';
+    } elseif ($numero < 0 || $numero > 9999) {
+        $errores['numero'][] = 'El número debe estar comprendido entre 0 y 9999.';
+    } else {
+        $sql = 'SELECT COUNT(*)
+                  FROM empleados
+                 WHERE numero = :numero';
+        $execute = [':numero' => $numero];
+        if ($id !== null) {
+            $sql .= ' AND id != :id';
+            $execute[':id'] = $id;
+        }
+        $sent = $pdo->prepare($sql);
+        $sent->execute($execute);
+        if ($sent->fetchColumn() > 0) {
+            $errores['numero'][] = 'Ya existe otro departamento con ese número.';
+        }
+    }
+}
+
+function validar_nombre(string $nombre, array &$errores): void
+{
+    if ($nombre === '') {
+        $errores['nombre'][] = 'El nombre no puede ser vacío.';
+    } elseif (mb_strlen($nombre) > 255) {
+        $errores['nombre'][] = 'El nombre es demasiado largo.';
+    }
+}
+
+function validar_apellidos(string &$apellidos, array &$errores): void
+{
+    if ($apellidos === '') {
+        $apellidos = NULL;
+    } elseif (mb_strlen($apellidos) > 255) {
+        $errores['apellidos'][] = 'Los apellidos son demasiado largos.';
+    }
+}
+
+function validar_fechanac(string $fechanac, array &$errores): void
+{
+    if ($fechanac === '') {
+        $errores['fechanac'][] = 'La fecha de nacimiento no puede ser vacía.';
+    } elseif (DateTime::createFromFormat('Y-m-d', $fechanac) === false) {
+        $errores['fechanac'][] = 'La fecha es incorrecta.';
+    }
+}
+
+function validar_codpostal(string $codpostal, array $errores)
+{
+    if ($codpostal === '') {
+        $errores['codpostal'][] = 'El código postal no puede ser vacío.';
+    } elseif (!ctype_digit($codpostal)) {
+        $errores['codpostal'][] = 'El código postal debe ser un número entero positivo.';
+    } elseif ($codpostal < 0 || $codpostal > 99999) {
+        $errores['codpostal'][] = 'El código postal debe estar comprendido entre 0 y 99999.';
+    }
+}
+
+function validar_telefono(string &$telefono, array $errores)
+{
+    if ($telefono === '') {
+        $telefono = NULL;
+    } elseif (!ctype_digit($telefono)) {
+        $errores['telefono'][] = 'El teléfono debe ser un número entero positivo.';
+    } elseif ($telefono < 0 || $telefono > 99999999999999) {
+        $errores['telefono'][] = 'El teléfono debe tener como máximo 14 dígitos.';
+    }
+}
+
+function validar_departamento_id(string $departamento_id, PDO $pdo, array $errores)
+{
+    if ($departamento_id === '') {
+        $errores['departamento_id'][] = 'Falta el departamento del empleado.';
+    } elseif (!ctype_digit($departamento_id)) {
+        $errores['departamento_id'][] = 'El departamento es incorrecto.';
+    } elseif (!buscar_departamento_por_id($pdo, $departamento_id)) {
+        $errores['departamento_id'][] = 'El departamento no existe.';
+    }
+}
+
+function insertar_empleado(PDO $pdo, array $campos): void
+{
+    extract($campos);
+    $sent = $pdo->prepare(
+        'INSERT INTO empleados (
+            numero,
+            nombre,
+            apellidos,
+            fechanac,
+            codpostal,
+            telefono,
+            departamento_id
+        ) VALUES (
+            :numero,
+            :nombre,
+            :apellidos,
+            :fechanac,
+            :codpostal,
+            :telefono,
+            :departamento_id
+        )'
+    );
 }
