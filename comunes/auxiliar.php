@@ -112,10 +112,16 @@ function insertar_departamento(PDO $pdo, string $codigo, string $denominacion): 
 {
     $sent = $pdo->prepare('INSERT INTO departamentos (codigo, denominacion)
                            VALUES (:codigo, :denominacion)');
-    $sent->execute([
+    $res = $sent->execute([
         ':codigo' => $codigo,
         ':denominacion' => $denominacion,
     ]);
+
+    if ($res) {
+        $_SESSION['info'] = 'El departamento se ha insertado correctamente.';
+    } else {
+        $_SESSION['info'] = 'Ocurrió un error al insertar el departamento.';
+    }
 }
 
 function modificar_departamento(PDO $pdo, string $id, string $codigo, string $denominacion): void
@@ -264,4 +270,20 @@ function insertar_empleado(PDO $pdo, array $campos): void
         ':telefono' => $telefono,
         ':departamento_id' => $departamento_id,
     ]);
+}
+
+function cabecera()
+{
+    ?>
+    <div align="right">
+        <a href="/empleados/index.php">Empleados</a>
+        <a href="/departamentos/">Departamentos</a>
+    </div>
+    <hr>
+    <?php if (isset($_SESSION['info'])): ?>
+        <div style="background-color: azure">
+            <?= $_SESSION['info'] ?>
+            <?php unset($_SESSION['info']) ?>
+        </div>
+    <?php endif;
 }

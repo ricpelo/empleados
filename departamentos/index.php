@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,8 @@
 <body>
     <?php
     require '../comunes/auxiliar.php';
+
+    cabecera();
 
     $denominacion = obtener_get('denominacion');
     ?>

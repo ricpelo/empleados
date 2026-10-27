@@ -51,6 +51,7 @@
             return volver();
         }
     }
+    cabecera();
     ?>
     <form action="" method="post">
         <div>

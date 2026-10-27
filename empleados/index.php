@@ -9,6 +9,8 @@
     <?php
     require '../comunes/auxiliar.php';
 
+    cabecera();
+
     // $denominacion = obtener_get('denominacion');
     ?>
     <!-- <fieldset>

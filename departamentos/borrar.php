@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require '../comunes/auxiliar.php';
 
 $id = obtener_post('id');
@@ -9,6 +11,12 @@ if ($id === '') {
 
 $pdo = conectar();
 $sent = $pdo->prepare('DELETE FROM departamentos WHERE id = :id');
-$sent->execute([':id' => $id]);
+$res = $sent->execute([':id' => $id]);
+
+if ($res) {
+    $_SESSION['info'] = 'El departamento se ha borrado correctamente.';
+} else {
+    $_SESSION['info'] = 'Ocurrió un error al borrar el departamento.';
+}
 
 return volver();
