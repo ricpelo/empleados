@@ -148,9 +148,9 @@ function lista_departamentos(PDO $pdo): array
     return $res;
 }
 
-function validar_numero(string $numero, PDO $pdo, array $errores, ?string $id = null)
+function validar_numero(string $numero, PDO $pdo, array &$errores, ?string $id = null)
 {
-if ($numero === '') {
+    if ($numero === '') {
         $errores['numero'][] = 'El número no puede ser vacío.';
     } elseif (!ctype_digit($numero)) {
         $errores['numero'][] = 'El número debe ser un número entero positivo.';
@@ -168,7 +168,7 @@ if ($numero === '') {
         $sent = $pdo->prepare($sql);
         $sent->execute($execute);
         if ($sent->fetchColumn() > 0) {
-            $errores['numero'][] = 'Ya existe otro departamento con ese número.';
+            $errores['numero'][] = 'Ya existe otro empleado con ese número.';
         }
     }
 }
@@ -200,7 +200,7 @@ function validar_fechanac(string $fechanac, array &$errores): void
     }
 }
 
-function validar_codpostal(string $codpostal, array $errores)
+function validar_codpostal(string $codpostal, array &$errores)
 {
     if ($codpostal === '') {
         $errores['codpostal'][] = 'El código postal no puede ser vacío.';
@@ -211,7 +211,7 @@ function validar_codpostal(string $codpostal, array $errores)
     }
 }
 
-function validar_telefono(string &$telefono, array $errores)
+function validar_telefono(string &$telefono, array &$errores)
 {
     if ($telefono === '') {
         $telefono = NULL;
@@ -222,7 +222,7 @@ function validar_telefono(string &$telefono, array $errores)
     }
 }
 
-function validar_departamento_id(string $departamento_id, PDO $pdo, array $errores)
+function validar_departamento_id(string $departamento_id, PDO $pdo, array &$errores)
 {
     if ($departamento_id === '') {
         $errores['departamento_id'][] = 'Falta el departamento del empleado.';
@@ -255,4 +255,13 @@ function insertar_empleado(PDO $pdo, array $campos): void
             :departamento_id
         )'
     );
+    $sent->execute([
+        ':numero' => $numero,
+        ':nombre' => $nombre,
+        ':apellidos' => $apellidos,
+        ':fechanac' => $fechanac,
+        ':codpostal' => $codpostal,
+        ':telefono' => $telefono,
+        ':departamento_id' => $departamento_id,
+    ]);
 }
