@@ -38,3 +38,6 @@ VALUES (10, 'Informática'),
 INSERT INTO empleados (numero, nombre, apellidos, fechanac, codpostal, telefono, departamento_id)
 VALUES (1000, 'Antonio', 'González', '19801004'::date, 11540, NULL, 2),
        (2000, 'María', 'Pérez', '20020501'::date, 11550, 666555444, 4);
+
+INSERT INTO usuarios (email, password)
+VALUES ('admin@admin.com', crypt('admin', gen_salt('bf', 12)));

@@ -25,6 +25,8 @@
     $pdo = conectar();
     $errores = [];
 
+    cabecera();
+
     if (empty($id) ||
         !ctype_digit($id) ||
         empty($fila = buscar_departamento_por_id($pdo, $id))) {

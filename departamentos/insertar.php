@@ -26,6 +26,8 @@
     $pdo = conectar();
     $errores = [];
 
+    cabecera();
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         validar_codigo($codigo, $pdo, $errores);
         validar_denominacion($denominacion, $errores);

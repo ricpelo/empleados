@@ -58,7 +58,7 @@ function buscar_departamento_por_denominacion(PDO $pdo, string $denominacion): a
 
 function volver()
 {
-    header('Location: index.php');
+    header('Location: /index.php');
 }
 
 function validar_codigo(string $codigo, PDO $pdo, array &$errores, ?string $id = null): void
@@ -278,6 +278,12 @@ function cabecera()
     <div align="right">
         <a href="/empleados/index.php">Empleados</a>
         <a href="/departamentos/">Departamentos</a>
+        <?php if (isset($_SESSION['login'])): ?>
+            <?= $_SESSION['login'] ?>
+            <a href="/usuarios/logout.php">Logout</a>
+        <?php else: ?>
+            <a href="/usuarios/login.php">Login</a>
+        <?php endif ?>
     </div>
     <hr>
     <?php if (isset($_SESSION['info'])): ?>
