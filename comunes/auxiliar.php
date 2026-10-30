@@ -303,3 +303,24 @@ function esta_logueado(): bool
 {
     return isset($_SESSION['login']);
 }
+
+function hh(string $cadena): string
+{
+    return htmlspecialchars($cadena);
+}
+
+function token_csrf(): string
+{
+    if (!isset($_SESSION['_csrf'])) {
+        $_SESSION['_csrf'] = bin2hex(random_bytes(32));
+    }
+
+    return $_SESSION['_csrf'];
+}
+
+function campo_csrf()
+{
+    ?>
+    <input type="hidden" name="_csrf" value="<?= token_csrf() ?>">
+    <?php
+}

@@ -54,7 +54,7 @@
                 <input
                     type="text"
                     name="codigo"
-                    value="<?= $codigo ?>"
+                    value="<?= hh($codigo) ?>"
                     <?= css_campo_error('codigo', $errores) ?>
                 >
             </label>
@@ -66,7 +66,7 @@
                 <input
                     type="text"
                     name="denominacion"
-                    value="<?= $denominacion ?>"
+                    value="<?= hh($denominacion) ?>"
                     <?= css_campo_error('denominacion', $errores) ?>
                 >
             </label>

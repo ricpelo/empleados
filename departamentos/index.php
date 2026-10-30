@@ -21,7 +21,7 @@
                 <label>
                     Denominación:
                     <input type="text" name="denominacion"
-                        value="<?= $denominacion ?>" />
+                        value="<?= hh($denominacion) ?>" />
                 </label>
             </div>
             <button type="submit">Buscar</button>
@@ -64,16 +64,17 @@
             <tbody>
                 <?php foreach ($filas as $fila): ?>
                     <tr>
-                        <td><?= $fila['codigo'] ?></td>
-                        <td><?= $fila['denominacion'] ?></td>
+                        <td><?= hh($fila['codigo']) ?></td>
+                        <td><?= hh($fila['denominacion']) ?></td>
                         <td>
                             <form action="borrar.php" method="post">
-                                <input type="hidden" name="id" value="<?= $fila['id'] ?>">
+                                <?php campo_csrf() ?>
+                                <input type="hidden" name="id" value="<?= hh($fila['id']) ?>">
                                 <button type="submit">Borrar</button>
                             </form>
                         </td>
                         <td>
-                            <a href="modificar.php?id=<?= $fila['id'] ?>">Modificar</a>
+                            <a href="modificar.php?id=<?= hh($fila['id']) ?>">Modificar</a>
                         </td>
                     </tr>
                 <?php endforeach ?>
