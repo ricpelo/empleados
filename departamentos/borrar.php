@@ -3,6 +3,11 @@ session_start();
 
 require '../comunes/auxiliar.php';
 
+if (!esta_logueado() || $_SESSION['login'] != 'admin@admin.com') {
+    $_SESSION['info'] = 'Debe iniciar sesión para poder borrar un departamento.';
+    return volver_departamento();
+}
+
 $id = obtener_post('id');
 
 if ($id === '') {

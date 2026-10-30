@@ -61,6 +61,11 @@ function volver()
     header('Location: /index.php');
 }
 
+function volver_departamento()
+{
+    header('Location: /departamentos/index.php');
+}
+
 function validar_codigo(string $codigo, PDO $pdo, array &$errores, ?string $id = null): void
 {
     if ($codigo === '') {
@@ -292,4 +297,9 @@ function cabecera()
             <?php unset($_SESSION['info']) ?>
         </div>
     <?php endif;
+}
+
+function esta_logueado(): bool
+{
+    return isset($_SESSION['login']);
 }
