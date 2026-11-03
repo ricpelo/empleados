@@ -9,6 +9,11 @@ require '../comunes/auxiliar.php';
 // }
 
 $id = obtener_post('id');
+$_csrf = obtener_post('_csrf');
+
+if (!comprobar_csrf($_csrf)) {
+    return volver();
+}
 
 if ($id === '') {
     return volver();

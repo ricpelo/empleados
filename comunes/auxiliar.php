@@ -324,3 +324,8 @@ function campo_csrf()
     <input type="hidden" name="_csrf" value="<?= token_csrf() ?>">
     <?php
 }
+
+function comprobar_csrf(string $_csrf): bool
+{
+    return $_csrf == token_csrf();
+}
