@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../output.css" rel="stylesheet">
     <title>Login</title>
 </head>
 <body>
@@ -33,7 +34,7 @@
     ?>
     <form action="" method="post">
         <div>
-            <label>
+            <label class="bg-blue-600">
                 Email:
                 <input
                     type="text"
