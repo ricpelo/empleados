@@ -1,12 +1,14 @@
 <?php session_start() ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../output.css" rel="stylesheet">
     <title>Login</title>
 </head>
+
 <body>
     <?php
     require '../comunes/auxiliar.php';
@@ -32,28 +34,22 @@
     }
 
     ?>
-    <form action="" method="post">
-        <div>
-            <label class="bg-blue-600">
-                Email:
-                <input
-                    type="text"
-                    name="email"
-                    value="<?= $email ?>"
-                >
+    <div class="container mx-auto">
+        <form action="" method="post" class="mt-20 max-w-sm mx-auto fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+            <label class="fieldset">
+                <span class="label">Correo electrónico</span>
+                <input name="email" type="email" class="input validator" required value="<?= $email ?>" />
+                <span class="validator-hint hidden">Obligatorio</span>
             </label>
-        </div>
-        <div>
-            <label>
-                Contraseña:
-                <input
-                    type="password"
-                    name="password"
-                    value="<?= $password ?>"
-                >
+
+            <label class="fieldset">
+                <span class="label">Contraseña</span>
+                <input name="password" type="password" class="input validator" required value="<?= $password ?>" />
+                <span class="validator-hint hidden">Obligatorio</span>
             </label>
-        </div>
-        <button type="submit">Login</button>
-    </form>
+
+            <button class="btn btn-neutral mt-4" type="submit">Iniciar sesión</button>
+        </form>
+    </div>
 </body>
 </html>

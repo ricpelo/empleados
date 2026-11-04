@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "@tailwindcss/cli": "^4.3.4",
-    "tailwindcss": "^4.3.4"
+    "tailwindcss": "^4.3.4",
+    "daisyui": "^5.7.50"
   },
   "scripts": {
     "dev": "npx @tailwindcss/cli -i input.css -o output.css --watch"
