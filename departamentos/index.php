@@ -9,6 +9,14 @@
 <body>
     <?php
     require '../comunes/auxiliar.php';
+    require '../Departamento.php';
+
+    $informatica = new Departamento();
+    // $informatica->id = 9;
+    // $informatica->denominacion = 'Informática';
+    // $informatica->codigo = '44';
+    echo $informatica->id;
+    var_dump($informatica);
 
     cabecera();
 
