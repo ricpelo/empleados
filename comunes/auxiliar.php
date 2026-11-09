@@ -15,12 +15,6 @@ function conectar(): PDO
     return new PDO('pgsql:host=localhost;dbname=empleados', 'empleados', 'empleados');
 }
 
-function todos_departamentos(PDO $pdo): array
-{
-    $sent = $pdo->query('SELECT * FROM departamentos');
-    return $sent->fetchAll();
-}
-
 function todos_empleados(PDO $pdo): array
 {
     $sent = $pdo->query('SELECT e.*, codigo, denominacion
@@ -36,24 +30,6 @@ function buscar_departamento_por_codigo(PDO $pdo, string $codigo): array
                             WHERE codigo::text = :codigo");
     $sent->execute([':codigo' => $codigo]);
     return $sent->fetch() ?: [];
-}
-
-function buscar_departamento_por_id(PDO $pdo, string $id): array
-{
-    $sent = $pdo->prepare("SELECT *
-                             FROM departamentos
-                            WHERE id = :id");
-    $sent->execute([':id' => $id]);
-    return $sent->fetch() ?: [];
-}
-
-function buscar_departamento_por_denominacion(PDO $pdo, string $denominacion): array
-{
-    $sent = $pdo->prepare("SELECT *
-                             FROM departamentos
-                            WHERE translate(denominacion, 'áéíóúÁÉÍÓÚ', 'aeiouAEIOU') ILIKE :denominacion");
-    $sent->execute([':denominacion' => "%$denominacion%"]);
-    return $sent->fetchAll();
 }
 
 function volver()
@@ -129,34 +105,9 @@ function insertar_departamento(PDO $pdo, string $codigo, string $denominacion): 
     }
 }
 
-function modificar_departamento(PDO $pdo, string $id, string $codigo, string $denominacion): void
-{
-    $sent = $pdo->prepare('UPDATE departamentos
-                              SET codigo = :codigo,
-                                  denominacion = :denominacion
-                            WHERE id = :id');
-    $sent->execute([
-        ':codigo' => $codigo,
-        ':denominacion' => $denominacion,
-        ':id' => $id,
-    ]);
-}
-
 function css_campo_error(string $campo, array $errores): string
 {
     return (isset($errores[$campo])) ? 'class="campo-error"' : '';
-}
-
-function lista_departamentos(PDO $pdo): array
-{
-    $filas = todos_departamentos($pdo);
-    $res = [];
-
-    foreach ($filas as $fila) {
-        $res[$fila['id']] = "(" . $fila['codigo'] . ") " . $fila['denominacion'];
-    }
-
-    return $res;
 }
 
 function validar_numero(string $numero, PDO $pdo, array &$errores, ?string $id = null)
@@ -239,7 +190,7 @@ function validar_departamento_id(string $departamento_id, PDO $pdo, array &$erro
         $errores['departamento_id'][] = 'Falta el departamento del empleado.';
     } elseif (!ctype_digit($departamento_id)) {
         $errores['departamento_id'][] = 'El departamento es incorrecto.';
-    } elseif (!buscar_departamento_por_id($pdo, $departamento_id)) {
+    } elseif (!Departamento::buscar_por_id($departamento_id)) {
         $errores['departamento_id'][] = 'El departamento no existe.';
     }
 }

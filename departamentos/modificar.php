@@ -19,7 +19,7 @@
 </head>
 <body>
     <?php
-    require '../comunes/auxiliar.php';
+    require '../Departamento.php';
 
     $id = obtener_get('id');
     $pdo = conectar();
@@ -29,7 +29,7 @@
 
     if (empty($id) ||
         !ctype_digit($id) ||
-        empty($fila = buscar_departamento_por_id($pdo, $id))) {
+        is_null($departamento = Departamento::buscar_por_id($id))) {
         return volver();
     }
 
@@ -39,12 +39,14 @@
         validar_codigo($codigo, $pdo, $errores, $id);
         validar_denominacion($denominacion, $errores);
         if (empty($errores)) {
-            modificar_departamento($pdo, $id, $codigo, $denominacion);
+            $departamento->codigo = $codigo;
+            $departamento->denominacion = $denominacion;
+            $departamento->guardar();
             return volver();
         }
     } else {
-        $codigo = $fila['codigo'];
-        $denominacion = $fila['denominacion'];
+        $codigo = $departamento->codigo;
+        $denominacion = $departamento->denominacion;
     }
     ?>
     <form action="" method="post">

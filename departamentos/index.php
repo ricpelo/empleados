@@ -8,15 +8,8 @@
 </head>
 <body>
     <?php
-    require '../comunes/auxiliar.php';
+    // require '../comunes/auxiliar.php';
     require '../Departamento.php';
-
-    $informatica = new Departamento();
-    // $informatica->id = 9;
-    // $informatica->denominacion = 'Informática';
-    // $informatica->codigo = '44';
-    echo $informatica->id;
-    var_dump($informatica);
 
     cabecera();
 
@@ -36,8 +29,6 @@
         </form>
     </fieldset>
     <?php
-    $pdo = conectar();
-
     $denominacion = str_replace(
         ["á", "é", "í", "ó", "ú"],
         ["a", "e", "i", "o", "u"],
@@ -45,16 +36,16 @@
     );
 
     if ($denominacion === '') {
-        $filas = todos_departamentos($pdo);
-        $count = count($filas);
+        $departamentos = Departamento::todos();
+        $count = count($departamentos);
         if ($count == 0) {
             ?>
             <h3>La tabla está vacía</h3>
             <?php
         }
     } else {
-        $filas = buscar_departamento_por_denominacion($pdo, $denominacion);
-        $count = count($filas);
+        $departamentos = Departamento::buscar_por_denominacion($denominacion);
+        $count = count($departamentos);
         if ($count == 0) {
             ?>
             <h3>No hay ningún departamento con esa denominación.</h3>
@@ -70,19 +61,19 @@
                 <th colspan="2">Acciones</th>
             </thead>
             <tbody>
-                <?php foreach ($filas as $fila): ?>
+                <?php foreach ($departamentos as $departamento): ?>
                     <tr>
-                        <td><?= hh($fila['codigo']) ?></td>
-                        <td><?= hh($fila['denominacion']) ?></td>
+                        <td><?= hh($departamento->codigo) ?></td>
+                        <td><?= hh($departamento->denominacion) ?></td>
                         <td>
                             <form action="borrar.php" method="post">
                                 <?php campo_csrf() ?>
-                                <input type="hidden" name="id" value="<?= hh($fila['id']) ?>">
+                                <input type="hidden" name="id" value="<?= hh($departamento->id) ?>">
                                 <button type="submit">Borrar</button>
                             </form>
                         </td>
                         <td>
-                            <a href="modificar.php?id=<?= hh($fila['id']) ?>">Modificar</a>
+                            <a href="modificar.php?id=<?= hh($departamento->id) ?>">Modificar</a>
                         </td>
                     </tr>
                 <?php endforeach ?>

@@ -19,7 +19,7 @@
 </head>
 <body>
     <?php
-    require '../comunes/auxiliar.php';
+    require '../Departamento.php';
 
     $codigo = obtener_post('codigo');
     $denominacion = obtener_post('denominacion');
@@ -32,7 +32,8 @@
         validar_codigo($codigo, $pdo, $errores);
         validar_denominacion($denominacion, $errores);
         if (empty($errores)) {
-            insertar_departamento($pdo, $codigo, $denominacion);
+            $departamento = new Departamento($codigo, $denominacion);
+            $departamento->guardar();
             return volver();
         }
     }
