@@ -17,6 +17,11 @@ abstract class ActiveRecord
         }
     }
 
+    /**
+     * Devuelve un array con todas las instancias correspondientes a la tabla.
+     *
+     * @return static[]
+     */
     public static function todos(): array
     {
         $pdo = static::pdo();

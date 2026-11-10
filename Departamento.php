@@ -17,6 +17,11 @@ class Departamento extends ActiveRecord
         return "(" . $this->codigo . ") " . $this->denominacion;
     }
 
+    /**
+     * Devuelve todos los departamentos que tengan una cierta denominación.
+     *
+     * @return Departamento[]
+     */
     public static function buscar_por_denominacion(string $denominacion): array
     {
         $pdo = Departamento::pdo();
