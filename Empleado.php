@@ -76,4 +76,29 @@ class Empleado extends ActiveRecord
             ':departamento_id' => $this->departamento_id,
         ]);
     }
+
+    public static function buscar_por_nombre(string $nombre): array
+    {
+        $pdo = static::pdo();
+        $sent = $pdo->prepare("SELECT *
+                                 FROM empleados
+                                WHERE translate(nombre, 'áéíóúÁÉÍÓÚ', 'aeiouAEIOU') ILIKE :nombre");
+        $sent->execute([':nombre' => "%$nombre%"]);
+        return $sent->fetchAll(PDO::FETCH_CLASS, static::class);
+    }
+
+    #[Override]
+    public function buscar(string $s): string
+    {
+        if (mb_strpos($this->nombre, $s) || mb_strpos($this->apellidos, $s)) {
+            return (string) $this;
+        }
+        return '';
+    }
+
+    #[Override]
+    public function contar(): int
+    {
+        return 7;
+    }
 }

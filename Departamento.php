@@ -17,6 +17,15 @@ class Departamento extends ActiveRecord
         return "(" . $this->codigo . ") " . $this->denominacion;
     }
 
+    #[Override]
+    public function buscar(string $s): string
+    {
+        if (mb_strpos($this->codigo, $s) || mb_strpos($this->denominacion, $s)) {
+            return (string) $this;
+        }
+        return '';
+    }
+
     /**
      * Devuelve todos los departamentos que tengan una cierta denominación.
      *
@@ -24,12 +33,12 @@ class Departamento extends ActiveRecord
      */
     public static function buscar_por_denominacion(string $denominacion): array
     {
-        $pdo = Departamento::pdo();
+        $pdo = static::pdo();
         $sent = $pdo->prepare("SELECT *
-                                FROM departamentos
+                                 FROM departamentos
                                 WHERE translate(denominacion, 'áéíóúÁÉÍÓÚ', 'aeiouAEIOU') ILIKE :denominacion");
         $sent->execute([':denominacion' => "%$denominacion%"]);
-        return $sent->fetchAll(PDO::FETCH_CLASS, Departamento::class);
+        return $sent->fetchAll(PDO::FETCH_CLASS, static::class);
     }
 
     #[Override]
@@ -59,5 +68,11 @@ class Departamento extends ActiveRecord
             ':codigo' => $this->codigo,
             ':denominacion' => $this->denominacion,
         ]);
+    }
+
+    #[Override]
+    public function contar(): int
+    {
+        return 2;
     }
 }

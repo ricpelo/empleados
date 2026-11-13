@@ -1,8 +1,13 @@
 <?php
 require 'comunes/auxiliar.php';
+require 'Saludo.php';
+require 'Buscable.php';
+require 'Contable.php';
 
-abstract class ActiveRecord
+abstract class ActiveRecord implements Buscable, Contable
 {
+    use Saludo;
+
     public ?int $id = null;
     private static ?PDO $pdo = null;
 
