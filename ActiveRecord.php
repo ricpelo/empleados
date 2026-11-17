@@ -1,4 +1,10 @@
 <?php
+namespace AR;
+
+use Interfaces\{Buscable, Contable};
+use Utilidades\Saludo;
+use PDO;
+
 require 'comunes/auxiliar.php';
 require 'Saludo.php';
 require 'Buscable.php';

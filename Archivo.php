@@ -1,4 +1,10 @@
 <?php
+namespace A;
+
+use Interfaces\Buscable;
+use Interfaces\Contable;
+use Override;
+use Utilidades\Saludo;
 
 require 'Buscable.php';
 require 'Contable.php';

@@ -9,6 +9,8 @@
 <body>
     <?php
     // require '../comunes/auxiliar.php';
+    use AR\Departamento;
+
     require '../Departamento.php';
 
     cabecera();

@@ -1,4 +1,5 @@
 <?php
+namespace Interfaces;
 
 interface Contable
 {

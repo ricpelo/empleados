@@ -1,12 +1,12 @@
 <?php
-namespace Dep;
+namespace AR;
 
 use Override;
 use PDO;
 
 require 'ActiveRecord.php';
 
-class Departamento extends \ActiveRecord
+class Departamento extends ActiveRecord
 {
     public string $codigo;
     public string $denominacion;

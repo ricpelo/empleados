@@ -1,4 +1,9 @@
 <?php
+namespace AR;
+
+use Override;
+use PDO;
+
 require 'ActiveRecord.php';
 
 class Empleado extends ActiveRecord
@@ -99,6 +104,11 @@ class Empleado extends ActiveRecord
     #[Override]
     public function contar(): int
     {
-        return 7;
+        return strlen('hola');
     }
+}
+
+function strlen(string $s): int
+{
+    return 5;
 }

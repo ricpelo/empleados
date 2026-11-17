@@ -1,4 +1,5 @@
 <?php
+namespace Utilidades;
 
 trait Saludo
 {
