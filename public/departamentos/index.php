@@ -9,9 +9,9 @@
 <body>
     <?php
     // require '../comunes/auxiliar.php';
-    use AR\Departamento;
+    use App\AR\Departamento;
 
-    require '../Departamento.php';
+    require '../../src/AR/Departamento.php';
 
     cabecera();
 

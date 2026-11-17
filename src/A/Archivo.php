@@ -1,10 +1,10 @@
 <?php
-namespace A;
+namespace App\A;
 
-use Interfaces\Buscable;
-use Interfaces\Contable;
+use App\Interfaces\Buscable;
+use App\Interfaces\Contable;
 use Override;
-use Utilidades\Saludo;
+use App\Utilidades\Saludo;
 
 require 'Buscable.php';
 require 'Contable.php';

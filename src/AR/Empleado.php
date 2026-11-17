@@ -1,5 +1,5 @@
 <?php
-namespace AR;
+namespace App\AR;
 
 use Override;
 use PDO;

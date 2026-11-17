@@ -1,14 +1,14 @@
 <?php
-namespace AR;
+namespace App\AR;
 
-use Interfaces\{Buscable, Contable};
-use Utilidades\Saludo;
+use App\Interfaces\{Buscable, Contable};
+use App\Utilidades\Saludo;
 use PDO;
 
-require 'comunes/auxiliar.php';
-require 'Saludo.php';
-require 'Buscable.php';
-require 'Contable.php';
+require '../../src/auxiliar.php';
+require '../../src/Utilidades/Saludo.php';
+require '../../src/Interfaces/Buscable.php';
+require '../../src/Interfaces/Contable.php';
 
 abstract class ActiveRecord implements Buscable, Contable
 {

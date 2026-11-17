@@ -1,5 +1,5 @@
 <?php
-namespace Utilidades;
+namespace App\Utilidades;
 
 trait Saludo
 {

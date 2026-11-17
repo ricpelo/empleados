@@ -18,7 +18,7 @@
 </head>
 <body>
     <?php
-    require 'comunes/auxiliar.php';
+    require '../src/auxiliar.php';
     cabecera();
     ?>
     <ul>
