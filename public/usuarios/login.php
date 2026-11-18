@@ -11,7 +11,7 @@
 
 <body>
     <?php
-    require '../comunes/auxiliar.php';
+    require '../../src/auxiliar.php';
 
     $email = obtener_post('email');
     $password = obtener_post('password');
