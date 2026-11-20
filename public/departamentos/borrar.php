@@ -1,7 +1,9 @@
 <?php
 session_start();
 
-require '../Departamento.php';
+use App\AR\Departamento;
+
+require '../../src/AR/Departamento.php';
 
 // if (!esta_logueado() || $_SESSION['login'] != 'admin@admin.com') {
     // $_SESSION['info'] = 'Debe iniciar sesión para poder borrar un departamento.';

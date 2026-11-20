@@ -19,7 +19,9 @@
 </head>
 <body>
     <?php
-    require '../Departamento.php';
+    use App\AR\Departamento;
+
+    require '../../src/AR/Departamento.php';
 
     $id = obtener_get('id');
     $pdo = conectar();

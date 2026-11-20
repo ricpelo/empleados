@@ -19,7 +19,10 @@
 </head>
 <body>
     <?php
-    require '../Departamento.php';
+
+    use App\AR\Departamento;
+
+    require '../../src/AR/Departamento.php';
 
     $codigo = obtener_post('codigo');
     $denominacion = obtener_post('denominacion');
@@ -32,7 +35,7 @@
         validar_codigo($codigo, $pdo, $errores);
         validar_denominacion($denominacion, $errores);
         if (empty($errores)) {
-            $departamento = new Departamento($codigo, $denominacion);
+            $departamento = new Departamento(['codigo' => $codigo, 'denominacion' => $denominacion]);
             $departamento->guardar();
             return volver();
         }
