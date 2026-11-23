@@ -18,7 +18,7 @@
 </head>
 <body>
     <?php
-    require '../src/auxiliar.php';
+    require '../vendor/autoload.php';
     cabecera();
     ?>
     <ul>

@@ -6,10 +6,6 @@ use App\Interfaces\Contable;
 use Override;
 use App\Utilidades\Saludo;
 
-require 'Buscable.php';
-require 'Contable.php';
-require 'Saludo.php';
-
 class Archivo implements Buscable, Contable
 {
     use Saludo;

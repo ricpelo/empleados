@@ -4,8 +4,6 @@ namespace App\AR;
 use Override;
 use PDO;
 
-require 'ActiveRecord.php';
-
 class Empleado extends ActiveRecord
 {
     public string $numero;

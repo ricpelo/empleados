@@ -1,4 +1,5 @@
 <?php
+use App\AR\Departamento;
 
 function obtener_get(string $par): string
 {

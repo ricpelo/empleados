@@ -19,10 +19,9 @@
 </head>
 <body>
     <?php
+    require '../../vendor/autoload.php';
 
     use App\AR\Departamento;
-
-    require '../../src/AR/Departamento.php';
 
     $codigo = obtener_post('codigo');
     $denominacion = obtener_post('denominacion');

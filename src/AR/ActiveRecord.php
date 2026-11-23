@@ -5,11 +5,6 @@ use App\Interfaces\{Buscable, Contable};
 use App\Utilidades\Saludo;
 use PDO;
 
-require '../../src/auxiliar.php';
-require '../../src/Utilidades/Saludo.php';
-require '../../src/Interfaces/Buscable.php';
-require '../../src/Interfaces/Contable.php';
-
 abstract class ActiveRecord implements Buscable, Contable
 {
     use Saludo;

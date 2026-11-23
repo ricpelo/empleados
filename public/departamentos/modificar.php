@@ -19,9 +19,9 @@
 </head>
 <body>
     <?php
-    use App\AR\Departamento;
+    require '../../vendor/autoload.php';
 
-    require '../../src/AR/Departamento.php';
+    use App\AR\Departamento;
 
     $id = obtener_get('id');
     $pdo = conectar();
