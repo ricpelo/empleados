@@ -24,6 +24,7 @@
     <ul>
         <li><a href="empleados/index.php">Gestión de empleados</a></li>
         <li><a href="departamentos/index.php">Gestión de departamentos</a></li>
+        <li><a href="generar_pdf.php">Generar un PDF con dompdf</a></li>
     </ul>
     <?php if (!isset($_COOKIE['banner'])): ?>
         <div id="banner">
